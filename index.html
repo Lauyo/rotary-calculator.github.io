@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>角度计算器</title>
+    <title>Angle Calculator</title>
     <style>
-         body {
+        body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
@@ -117,6 +117,15 @@
             }
         };
 
+        // 获取用户浏览器的语言
+        function getUserLanguage() {
+            var userLang = navigator.language || navigator.userLanguage;
+            return userLang.startsWith('zh') ? 'zh' : 'en';
+        }
+
+        // 设置默认语言为用户浏览器语言
+        language = getUserLanguage();
+
         // 切换语言函数
         function toggleLanguage() {
             language = language === 'zh' ? 'en' : 'zh'; // 切换语言
@@ -132,9 +141,24 @@
             });
         }
 
-        // 计算函数，不受语言影响
+        // 计算函数
         function calculate() {
-            // 省略计算逻辑，与之前相同
+            var a = parseFloat(document.getElementById('a').value);
+            var b = parseFloat(document.getElementById('b').value);
+            var X = parseFloat(document.getElementById('X').value);
+            var Z1 = parseFloat(document.getElementById('Z1').value);
+            var Y = parseFloat(document.getElementById('Y').value);
+            var Z2 = parseFloat(document.getElementById('Z2').value);
+            
+            var angle1 = (90 - radianToDegree(Math.acos((X - b) / (a - b)))) * Z1;
+            var angle2 = (90 - radianToDegree(Math.acos((Y - b) / (a - b)))) * Z2;
+            var result = Math.abs(angle1 - angle2);
+
+            document.getElementById('result').innerText = langText[language]['result'] + ": " + result.toFixed(2);
+        }
+
+        function radianToDegree(radian) {
+            return radian * (180 / Math.PI);
         }
 
         // 页面加载时初始化
