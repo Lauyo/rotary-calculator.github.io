@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角度计算器</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-group {
+            margin-bottom: 10px;
+        }
+        
+        .input-group label {
+            margin-right: 10px;
+        }
+        
+        .input-group input {
+            width: 100px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="input-group">
+            <label for="a" data-lang="a-label">正位宽度 (a):</label>
+            <input type="number" id="a" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="b" data-lang="b-label">侧位宽度 (b):</label>
+            <input type="number" id="b" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="X" data-lang="X-label">侧位下近端宽度 (X):</label>
+            <input type="number" id="X" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="Z1" data-lang="Z1-label">近端旋转方向 (Z1):</label>
+            <input type="number" id="Z1" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="Y" data-lang="Y-label">侧位下远端宽度 (Y):</label>
+            <input type="number" id="Y" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="Z2" data-lang="Z2-label">远端旋转方向 (Z2):</label>
+            <input type="number" id="Z2" step="any" required>
+        </div>
+        <button onclick="calculate()" data-lang="calculate-btn">计算</button>
+        <div class="result" id="result" data-lang="result"></div>
+        <button onclick="toggleLanguage()" data-lang="toggle-lang-btn">切换语言</button>
+    </div>
+
+    <script>
+        var language = 'zh'; // 默认语言为中文
+
+        // 中英文内容对象
+        var langText = {
+            'zh': {
+                'a-label': '正位宽度 (a):',
+                'b-label': '侧位宽度 (b):',
+                'X-label': '侧位下近端宽度 (X):',
+                'Z1-label': '近端旋转方向 (Z1):',
+                'Y-label': '侧位下远端宽度 (Y):',
+                'Z2-label': '远端旋转方向 (Z2):',
+                'calculate-btn': '计算',
+                'result': '结果',
+                'toggle-lang-btn': '切换语言'
+            },
+            'en': {
+                'a-label': 'Positive Width (a):',
+                'b-label': 'Side Width (b):',
+                'X-label': 'Side Width at Near End (X):',
+                'Z1-label': 'Rotation Direction at Near End (Z1):',
+                'Y-label': 'Side Width at Far End (Y):',
+                'Z2-label': 'Rotation Direction at Far End (Z2):',
+                'calculate-btn': 'Calculate',
+                'result': 'Result',
+                'toggle-lang-btn': 'Toggle Language'
+            }
+        };
+
+        // 切换语言函数
+        function toggleLanguage() {
+            language = language === 'zh' ? 'en' : 'zh'; // 切换语言
+            updateLanguage(); // 更新页面内容
+        }
+
+        // 更新页面内容函数
+        function updateLanguage() {
+            var elements = document.querySelectorAll('[data-lang]'); // 获取所有包含data-lang属性的元素
+            elements.forEach(function(element) {
+                var key = element.getAttribute('data-lang'); // 获取data-lang属性的值
+                element.textContent = langText[language][key]; // 更新元素的文本内容
+            });
+        }
+
+        // 计算函数，不受语言影响
+        function calculate() {
+            // 省略计算逻辑，与之前相同
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLanguage(); // 初始化页面语言
+        });
+    </script>
+</body>
+</html>
