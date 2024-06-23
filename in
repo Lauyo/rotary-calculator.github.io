@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-mode="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角度计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .calculator {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-group {
+            margin-bottom: 10px;
+        }
+        
+        .input-group label {
+            margin-right: 10px;
+        }
+        
+        .input-group input {
+            width: 100px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="input-group">
+            <label for="a">正位宽度 (a):</label>
+            <input type="number" id="a" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="b">侧位宽度 (b):</label>
+            <input type="number" id="b" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="X">侧位下近端宽度 (X):</label>
+            <input type="number" id="X" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="Z1">近端旋转方向 (Z1):</label>
+            <input type="number" id="Z1" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="Y">侧位下远端宽度 (Y):</label>
+            <input type="number" id="Y" step="any" required>
+        </div>
+        <div class="input-group">
+            <label for="Z2">远端旋转方向 (Z2):</label>
+            <input type="number" id="Z2" step="any" required>
+        </div>
+        <button onclick="calculate()">计算</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            var a = parseFloat(document.getElementById('a').value);
+            var b = parseFloat(document.getElementById('b').value);
+            var X = parseFloat(document.getElementById('X').value);
+            var Z1 = parseFloat(document.getElementById('Z1').value);
+            var Y = parseFloat(document.getElementById('Y').value);
+            var Z2 = parseFloat(document.getElementById('Z2').value);
+            
+            var angle1 = (90 - radianToDegree(Math.acos((X - b) / (a - b)))) * Z1;
+            var angle2 = (90 - radianToDegree(Math.acos((Y - b) / (a - b)))) * Z2;
+            var result = Math.abs(angle1 - angle2);
+
+            document.getElementById('result').innerText = "结果: " + result.toFixed(2);
+        }
+
+        function radianToDegree(radian) {
+            return radian * (180 / Math.PI);
+        }
+    </script>
+</body>
+
+</html>
